@@ -1,21 +1,23 @@
 #include <Servo.h>
 
+// importat "magic numbers" (sth like setting for calibration)
 #define MAX_DEG 180
 #define MIN_DEG 0
 #define PI_CONST 3.1415
 #define SERVO_ANALOG_PIN 9
 #define SERVO_OPEN 1
 #define SERVO_CLOSE 0
+#define SERVO_OPEN_DISTANCE 31
 #define DELAY_TIME_SEC 3
 #define BTN_PIN 7
 #define LED_RED_PIN 2
 #define LED_GREEN_PIN 4
 
-Servo demo_servo;
-int pos;
+Servo servo;
+int servo_position;
 bool btn_state;
 
-// dist -> rotate distance in [mm]
+// dist -> rotation distance in [mm]
 // action -> move backward to open or forward to close
 void run_servo(int dist, bool action)
 {
@@ -24,7 +26,7 @@ void run_servo(int dist, bool action)
   if (dist > (PI_CONST * 10) || dist < 0)
     dist = PI_CONST * 10;
 
-  // convert rotation distance to degrees
+  // convert distance which gear makes to degrees
   dist_in_deg = dist * (18/PI_CONST);
 
   if (action)
@@ -32,16 +34,18 @@ void run_servo(int dist, bool action)
     // open
     for (deg = MIN_DEG; deg <= dist_in_deg; deg++)
     {
-      demo_servo.write(deg);
+      // set new servo position and wait 15ms
+      // the delay value makes servo run in some "speed"
+      servo.write(deg);
       delay(15);
     }
   } 
   else
   {
-    //close
+    // close
     for (deg = dist_in_deg; deg >= MIN_DEG; deg--)
     {
-      demo_servo.write(deg);
+      servo.write(deg);
       delay(15);
     }
   }
@@ -49,11 +53,12 @@ void run_servo(int dist, bool action)
 
 void setup() 
 {
-  demo_servo.attach(SERVO_ANALOG_PIN);
-  pos = demo_servo.read();
+  servo.attach(SERVO_ANALOG_PIN);
+  servo_position = servo.read();
 
-  if (pos != 0)
-    demo_servo.write(0);
+  // set servo to initial position
+  if (servo_position != 0)
+    servo.write(0);
 
   // debug servo pos
   Serial.begin(9600);
@@ -70,20 +75,29 @@ void setup()
 void loop() 
 {
   btn_state = digitalRead(BTN_PIN);
+
+  // print button state in serial monitor FALSE if ON, TRUE if OF
   Serial.println(btn_state);
 
-  // turn on red diode
+  // turn on RED LED 
   digitalWrite(LED_RED_PIN, HIGH);
 
   // run servo if btn is pushed
   if (!btn_state)
   {
-    run_servo(31, SERVO_OPEN);
+    run_servo(SERVO_OPEN_DISTANCE, SERVO_OPEN);
+
+    // turn off RED LED and turn on GREEN LED
     digitalWrite(LED_RED_PIN, LOW);
     digitalWrite(LED_GREEN_PIN, HIGH);
+
+    // waiting time in seconds
     delay(DELAY_TIME_SEC * 1000);
+
+    // turn off GREEN LED and turn on RED LED
     digitalWrite(LED_GREEN_PIN, LOW);
     digitalWrite(LED_RED_PIN, HIGH);
-    run_servo(31, SERVO_CLOSE);
+
+    run_servo(SERVO_OPEN_DISTANCE, SERVO_CLOSE);
   }
 }
