@@ -18,7 +18,7 @@ int servo_position;
 bool btn_state;
 
 // dist -> rotation distance in [mm]
-// action -> move backward to open or forward to close
+// action -> move backwards to open or forward to close
 void run_servo(int dist, bool action)
 {
   int deg = MIN_DEG, dist_in_deg = 0;
@@ -26,7 +26,7 @@ void run_servo(int dist, bool action)
   if (dist > (PI_CONST * 10) || dist < 0)
     dist = PI_CONST * 10;
 
-  // convert distance which gear makes to degrees
+  // convert gear distance to degrees
   dist_in_deg = dist * (18/PI_CONST);
 
   if (action)
@@ -64,10 +64,10 @@ void setup()
   Serial.begin(9600);
   Serial.println(servo_position);
 
-  // init btn pin
+  // init button pin
   pinMode(BTN_PIN, INPUT_PULLUP);
 
-  // init diodes pins
+  // init diode pins
   pinMode(LED_RED_PIN, OUTPUT);
   pinMode(LED_GREEN_PIN, OUTPUT);
 }
@@ -76,13 +76,13 @@ void loop()
 {
   btn_state = digitalRead(BTN_PIN);
 
-  // print button state in serial monitor FALSE if ON, TRUE if OF
+  // print button state in serial monitor FALSE if ON, TRUE if OFF
   Serial.println(btn_state);
 
   // turn on RED LED 
   digitalWrite(LED_RED_PIN, HIGH);
 
-  // run servo if btn is pushed
+  // run servo if btn is pressed
   if (!btn_state)
   {
     run_servo(SERVO_OPEN_DISTANCE, SERVO_OPEN);
