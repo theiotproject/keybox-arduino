@@ -60,9 +60,9 @@ void setup()
   if (servo_position != 0)
     servo.write(0);
 
-  // debug servo pos
+  // set debug monitor baud rate
   Serial.begin(9600);
-  Serial.println(pos);
+  Serial.println(servo_position);
 
   // init btn pin
   pinMode(BTN_PIN, INPUT_PULLUP);
