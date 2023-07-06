@@ -13,7 +13,7 @@
 
 // dist -> rotation distance in [mm]
 // action -> move backwards to open or forward to close
-void run_servo(Servo servo_instance, int dist, bool action)
+static void run_servo(Servo servo_instance, int dist, bool action)
 {
   int deg = MIN_DEG, dist_in_deg = 0;
 
@@ -29,8 +29,8 @@ void run_servo(Servo servo_instance, int dist, bool action)
     for (deg = MIN_DEG; deg <= dist_in_deg; deg++)
     {
       // set new servo position and wait 15ms
-      // the delay value makes servo run in some "speed"
       servo_instance.write(deg);
+      // the delay value slows down servo
       delay(15);
     }
   } 

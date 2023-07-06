@@ -1,4 +1,4 @@
-#include "run_servo.h"
+#include "./include/run_servo.h"
 
 // important "magic numbers" (sth like settings for calibration)
 #define DELAY_TIME_SEC 3
@@ -21,7 +21,6 @@ void setup()
 
   // set debug monitor baud rate
   Serial.begin(9600);
-  Serial.println(servo_position);
 
   // init button pin
   pinMode(BTN_PIN, INPUT_PULLUP);
@@ -40,7 +39,7 @@ void loop()
 
   // turn on RED LED 
   digitalWrite(LED_RED_PIN, HIGH);
-
+  
   // run servo if btn is pressed
   if (!btn_state)
   {
