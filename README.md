@@ -16,7 +16,7 @@ This repo contains the software for the Keybox device
 [Click here to see the circuit](https://imgur.com/a/XT39uWD)
 
 ## Installation
-> We assume you know how to use arduino IDE
+> This manual assumes you know how to how to use arduino IDE and your circuit is correct
 ### CLI
 ---
 - Clone repo to your directory using ` git clone `
