@@ -1,4 +1,4 @@
-#include "include/run_servo.h"
+#include "include/run_servo.hpp"
 
 // important "magic numbers" (sth like settings for calibration)
 #define DELAY_TIME_SEC 3
