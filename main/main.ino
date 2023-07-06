@@ -1,6 +1,6 @@
 #include <Servo.h>
 
-// importat "magic numbers" (sth like settings for calibration)
+// important "magic numbers" (sth like settings for calibration)
 #define MAX_DEG 180
 #define MIN_DEG 0
 #define PI_CONST 3.1415
