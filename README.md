@@ -12,11 +12,21 @@ This repo contains the software for the Keybox device
 - [ ] Push button
 - [ ] Servo SG 90
 - [ ] 220 Ohm resistor x3
+
+[Click here to see the circuit](https://imgur.com/a/XT39uWD)
+
 ## Installation
 > We assume you know how to use arduino IDE
 ### CLI
 ---
-Clone repo to your directory using ` git clone `
+- Clone repo to your directory using ` git clone `
+- Open Arduino IDE in directory with cloned repo
+- Compile sketch
+- Upload to the board
+
 ### Other
 ---
-Download repo and extract it to your directory
+- Download repo and extract it to your directory
+- Open Arduino IDE in directory with downloaded repo
+- Compile sketch
+- Upload to the board
