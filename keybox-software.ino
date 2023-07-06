@@ -10,7 +10,7 @@ Servo servo;
 int servo_position;
 bool btn_state;
 
-void setup() 
+static void setup() 
 {
   servo.attach(SERVO_ANALOG_PIN);
   servo_position = servo.read();
@@ -30,7 +30,7 @@ void setup()
   pinMode(LED_GREEN_PIN, OUTPUT);
 }
 
-void loop() 
+static void loop() 
 {
   btn_state = digitalRead(BTN_PIN);
 
