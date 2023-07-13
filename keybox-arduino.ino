@@ -1,18 +1,14 @@
+#include "./config/config.h"
 #include "./include/run_servo.h"
-
-// important "magic numbers" (sth like settings for calibration)
-#define DELAY_TIME_SEC 3
-#define BTN_PIN 7
-#define LED_RED_PIN 2
-#define LED_GREEN_PIN 4
 
 Servo servo;
 int servo_position;
 bool btn_state;
 
-static void setup() 
+void setup() 
 {
   servo.attach(SERVO_ANALOG_PIN);
+
   servo_position = servo.read();
 
   // set servo to initial position
@@ -30,7 +26,7 @@ static void setup()
   pinMode(LED_GREEN_PIN, OUTPUT);
 }
 
-static void loop() 
+void loop() 
 {
   btn_state = digitalRead(BTN_PIN);
 
@@ -46,15 +42,15 @@ static void loop()
     run_servo(servo, SERVO_OPEN_DISTANCE, SERVO_OPEN);
 
     // turn off RED LED and turn on GREEN LED
-    digitalWrite(LED_RED_PIN, LOW);
-    digitalWrite(LED_GREEN_PIN, HIGH);
+    //digitalWrite(LED_RED_PIN, LOW);
+    //digitalWrite(LED_GREEN_PIN, HIGH);
 
     // waiting time in seconds
     delay(DELAY_TIME_SEC * 1000);
 
     // turn off GREEN LED and turn on RED LED
-    digitalWrite(LED_GREEN_PIN, LOW);
-    digitalWrite(LED_RED_PIN, HIGH);
+    //digitalWrite(LED_GREEN_PIN, LOW);
+    //digitalWrite(LED_RED_PIN, HIGH);
 
     run_servo(servo, SERVO_OPEN_DISTANCE, SERVO_CLOSE);
   }

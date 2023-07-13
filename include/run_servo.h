@@ -1,15 +1,7 @@
 #pragma once
 
+#include "../config/config.h"
 #include <Servo.h>
-
-// important "magic numbers" (sth like settings for calibration)
-#define PI_CONST 3.1415
-#define MAX_DEG 180
-#define MIN_DEG 0
-#define SERVO_ANALOG_PIN 9
-#define SERVO_OPEN 1
-#define SERVO_CLOSE 0
-#define SERVO_OPEN_DISTANCE 31
 
 // dist -> rotation distance in [mm]
 // action -> move backwards to open or forward to close
