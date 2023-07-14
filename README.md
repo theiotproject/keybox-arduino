@@ -14,7 +14,7 @@ This repository contains the software for the Keybox device.
 - Red LED
 - Push button
 - Servo SG 90
-- Three 220 Ohm resistors
+- Five 220 Ohm resistors
 
 [Circuit Diagram](https://imgur.com/a/XT39uWD)
 
