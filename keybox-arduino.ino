@@ -45,7 +45,7 @@ void loop()
   // if (!btn_state)
   if(read_card())
   {
-    Serial.print("[LOG] Card detected");
+    Serial.println("[LOG] Card detected");
     //run_servo(SERVO_OPEN_DISTANCE, SERVO_OPEN);
 
     // turn off RED LED and turn on GREEN LED
