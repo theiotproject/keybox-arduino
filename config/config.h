@@ -1,14 +1,16 @@
 #pragma once
 
-// MATH
+// GENERAL PURPOSE
 #define PI_CONST 3.1415
+#define SERIAL_MONITOR_BAUD_RATE 9600
 
 // BTN
 #define BTN_PIN 16
 
 // LEDs
-#define LED_RED_PIN 2
-#define LED_GREEN_PIN 4
+#define LED_RED_PIN 16
+#define LED_GREEN_PIN 17
+#define BUILTIN_LED 2 
 
 // SERVO
 #define SERVO_ANALOG_PIN 13
@@ -24,7 +26,7 @@
 // RFID RC522
 #define SCK_PIN 18
 #define MISO_PIN 19
-#define SDA_PIN 21
-#define MOSI_PIN 22
-#define RST_PIN 23
+#define SDA_PIN 5
+#define MOSI_PIN 23
+#define RST_PIN 21
 

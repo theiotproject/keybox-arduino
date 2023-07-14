@@ -1,22 +1,14 @@
 #include "./config/config.h"
 #include "./include/run_servo.h"
+#include "./include/read_rfid.h"
+#include <stdint.h>
 
-Servo servo;
-int servo_position;
 bool btn_state;
 
 void setup() 
 {
-  servo.attach(SERVO_ANALOG_PIN);
-
-  servo_position = servo.read();
-
-  // set servo to initial position
-  if (servo_position != 0)
-    servo.write(0);
-
   // set debug monitor baud rate
-  Serial.begin(9600);
+  Serial.begin(SERIAL_MONITOR_BAUD_RATE);
 
   // init button pin
   pinMode(BTN_PIN, INPUT_PULLUP);
@@ -24,34 +16,49 @@ void setup()
   // init diode pins
   pinMode(LED_RED_PIN, OUTPUT);
   pinMode(LED_GREEN_PIN, OUTPUT);
+  pinMode(BUILTIN_LED, OUTPUT);
+
+  // init devices
+  setup_card();
+  setup_servo();
 }
 
 void loop() 
 {
-  btn_state = digitalRead(BTN_PIN);
+  //btn_state = digitalRead(BTN_PIN);
 
   // print button state in serial monitor FALSE if ON, TRUE if OFF
-  Serial.println(btn_state);
+  // Serial.println(btn_state);
 
   // turn on RED LED 
   digitalWrite(LED_RED_PIN, HIGH);
   
+  // read rfid card
+  //if(read_card())
+  //{
+    //digitalWrite(BUILTIN_LED, HIGH);
+    //delay(1000);
+    //digitalWrite(BUILTIN_LED, LOW);
+  //}
+  
   // run servo if btn is pressed
-  if (!btn_state)
+  // if (!btn_state)
+  if(read_card())
   {
-    run_servo(servo, SERVO_OPEN_DISTANCE, SERVO_OPEN);
+    Serial.print("[LOG] Card detected");
+    //run_servo(SERVO_OPEN_DISTANCE, SERVO_OPEN);
 
     // turn off RED LED and turn on GREEN LED
-    //digitalWrite(LED_RED_PIN, LOW);
-    //digitalWrite(LED_GREEN_PIN, HIGH);
+    digitalWrite(LED_RED_PIN, LOW);
+    digitalWrite(LED_GREEN_PIN, HIGH);
 
     // waiting time in seconds
     delay(DELAY_TIME_SEC * 1000);
 
     // turn off GREEN LED and turn on RED LED
-    //digitalWrite(LED_GREEN_PIN, LOW);
-    //digitalWrite(LED_RED_PIN, HIGH);
+    digitalWrite(LED_GREEN_PIN, LOW);
+    digitalWrite(LED_RED_PIN, HIGH);
 
-    run_servo(servo, SERVO_OPEN_DISTANCE, SERVO_CLOSE);
+    //run_servo(SERVO_OPEN_DISTANCE, SERVO_CLOSE);
   }
 }
