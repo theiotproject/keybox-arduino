@@ -1,7 +1,10 @@
-#include "./config/config.h"
-#include "./include/run_servo.h"
-#include "./include/read_rfid.h"
+#include <Arduino.h>
+#include <SPI.h>
+#include <Wire.h>
 #include <stdint.h>
+#include "../lib/config.h"
+#include "../lib/run_servo.h"
+#include "../lib/read_rfid.h"
 
 bool btn_state;
 
@@ -45,7 +48,7 @@ void loop()
   // if (!btn_state)
   if(read_card())
   {
-    Serial.println("[LOG] Card detected");
+    Serial.println("[LOG] Card detected!");
     //run_servo(SERVO_OPEN_DISTANCE, SERVO_OPEN);
 
     // turn off RED LED and turn on GREEN LED

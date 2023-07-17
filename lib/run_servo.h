@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../config/config.h"
 #include <Servo.h>
 #include <stdint.h>
 
