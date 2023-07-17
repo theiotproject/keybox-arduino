@@ -32,21 +32,21 @@ static void run_servo(uint8_t dist, bool action)
   if (action)
   {
     // open
-    for (deg = MIN_DEG; deg <= dist_in_deg; deg++)
+    for (deg = MIN_DEG; deg < MAX_DEG; deg++)
     {
       // set new servo position and wait 15ms
       servo.write(deg);
       // the delay value slows down servo
-      delay(15);
+      delay(10);
     }
   } 
   else
   {
     // close
-    for (deg = dist_in_deg; deg >= MIN_DEG; deg--)
+    for (deg = MAX_DEG; deg > MIN_DEG; deg--)
     {
       servo.write(deg);
-      delay(15);
+      delay(10);
     }
   }
 }
