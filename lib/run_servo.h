@@ -2,6 +2,7 @@
 
 #include <Servo.h>
 #include <stdint.h>
+#include "../lib/logs.h"
 
 static Servo servo;
 static uint8_t servo_position;
@@ -36,7 +37,7 @@ static void run_servo(uint8_t dist)
   // convert gear distance to degrees
   dist_in_deg = dist * (18/PI_CONST);
 
-  // open
+  logs("Servo running forwards");
   for (deg = MIN_DEG; deg < MAX_DEG; deg++)
   {
     // set new servo position and wait 15ms
@@ -56,7 +57,7 @@ static void run_servo(uint8_t dist)
   digitalWrite(LED_GREEN_PIN, LOW);
   digitalWrite(LED_RED_PIN, HIGH);
 
-  // close
+  logs("Servo running backwards");
   for (deg = MAX_DEG; deg > MIN_DEG; deg--)
   {
     servo.write(deg);

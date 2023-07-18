@@ -1,5 +1,8 @@
 #pragma once
 #include <Arduino.h>
+#include <time.h>
+
+static time_t time_res;
 
 void setup_logs(int baud)
 {
@@ -9,6 +12,10 @@ void setup_logs(int baud)
 template <typename int_or_str> 
 void logs(int_or_str arg)
 {
-  Serial.print("[LOG] ");
+  time_res = time(NULL);
+  Serial.print("[LOG]");
+  Serial.print("[ ");
+  Serial.print((intmax_t) time_res);
+  Serial.print(" ] ");
   Serial.println(arg);
 }

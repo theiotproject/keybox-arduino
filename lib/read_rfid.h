@@ -5,6 +5,7 @@
 #include <MFRC522DriverPinSimple.h>
 #include <MFRC522Debug.h>
 #include <stdint.h>
+#include <stdio.h>
 #include "../lib/logs.h"
 
 // Create pin driver. See typical pin layout above.
@@ -20,6 +21,20 @@ static MFRC522 mfrc522{driver};
 
 bool check_access()
 {
+  // get the card id
+  const MFRC522Constants::Uid &uid = mfrc522.uid;
+
+  // array of card id in bytes 
+  char picc_id_str[uid.size]; 
+  uint8_t picc_id_byte;
+
+  // add bytes to array
+  for (uint8_t i = 0; i < uid.size; i++)
+    picc_id_byte += sprintf(&picc_id_str[picc_id_byte], "%d", uid.uidByte[i]);
+
+  // log card id
+  logs(picc_id_str);
+
   return true;
 }
 
@@ -34,35 +49,34 @@ void setup_card()
 
 bool read_card() 
 {
-	if (!mfrc522.PICC_IsNewCardPresent() || !mfrc522.PICC_ReadCardSerial()) 
-		return false;
-
-  logs("Card detected");
-
-  if (check_access())
+	if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial()) 
   {
-    // access LED signal, blink 3 times
-    for (uint8_t i = 0; i < 3; i++)
+    logs("Card detected");
+
+    if (check_access())
     {
-      digitalWrite(LED_BLUE_PIN, HIGH);
-      delay(200);
-      digitalWrite(LED_BLUE_PIN, LOW);
-      delay(200);
+      logs("Access granted");
+
+      // access LED signal, blink 3 times
+      for (uint8_t i = 0; i < 3; i++)
+      {
+        digitalWrite(LED_BLUE_PIN, HIGH);
+        delay(200);
+        digitalWrite(LED_BLUE_PIN, LOW);
+        delay(200);
+      }
+      
+      return true;
     }
-    // get the card uid
-    const MFRC522Constants::Uid &uid = mfrc522.uid;
+    else 
+    {
+      logs("Access denied");
 
-    // array of card id in bytes 
-    uint8_t picc_id[uid.size];
-
-    // add bytes to array
-    for (uint8_t i = 0; i < uid.size; i++)
-      picc_id[i] = uid.uidByte[i];
-
-    return true;
+      // TODO blink when access is denied
+      return false;
+    }
   }
-  else 
-  {
-    return false;
-  }
+
+  // stand by state
+	return false;
 }
