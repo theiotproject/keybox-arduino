@@ -8,6 +8,13 @@ static uint8_t servo_position;
 
 static void setup_servo()
 {
+  // init diode pins
+  pinMode(LED_RED_PIN, OUTPUT);
+  pinMode(LED_GREEN_PIN, OUTPUT);
+
+  // turn on RED LED 
+  digitalWrite(LED_RED_PIN, HIGH);
+
   // initialize servo
   servo.attach(SERVO_ANALOG_PIN);
   servo_position = servo.read();
@@ -19,7 +26,7 @@ static void setup_servo()
 
 // dist -> rotation distance in [mm]
 // action -> move backwards to open or forward to close
-static void run_servo(uint8_t dist, bool action)
+static void run_servo(uint8_t dist)
 {
   uint8_t deg = MIN_DEG, dist_in_deg = 0;
 
@@ -29,24 +36,30 @@ static void run_servo(uint8_t dist, bool action)
   // convert gear distance to degrees
   dist_in_deg = dist * (18/PI_CONST);
 
-  if (action)
+  // open
+  for (deg = MIN_DEG; deg < MAX_DEG; deg++)
   {
-    // open
-    for (deg = MIN_DEG; deg < MAX_DEG; deg++)
-    {
-      // set new servo position and wait 15ms
-      servo.write(deg);
-      // the delay value slows down servo
-      delay(10);
-    }
-  } 
-  else
+    // set new servo position and wait 15ms
+    servo.write(deg);
+    // the delay value slows down servo
+    delay(10);
+  }
+    
+  // turn off RED LED and turn on GREEN LED
+  digitalWrite(LED_RED_PIN, LOW);
+  digitalWrite(LED_GREEN_PIN, HIGH);
+
+  // waiting time in seconds
+  delay(DELAY_TIME_SEC * 1000);
+  
+  // turn off GREEN LED and turn on RED LED
+  digitalWrite(LED_GREEN_PIN, LOW);
+  digitalWrite(LED_RED_PIN, HIGH);
+
+  // close
+  for (deg = MAX_DEG; deg > MIN_DEG; deg--)
   {
-    // close
-    for (deg = MAX_DEG; deg > MIN_DEG; deg--)
-    {
-      servo.write(deg);
-      delay(10);
-    }
+    servo.write(deg);
+    delay(10);
   }
 }
