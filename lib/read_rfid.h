@@ -5,31 +5,36 @@
 #include <MFRC522DriverPinSimple.h>
 #include <MFRC522Debug.h>
 #include <stdint.h>
+#include "../lib/logs.h"
 
-MFRC522DriverPinSimple ss_pin(SDA_PIN); // Create pin driver. See typical pin layout above.
-
-SPIClass &spiClass = SPI; // Alternative SPI e.g. SPI2 or from library e.g. softwarespi.
-
-const SPISettings spiSettings = SPISettings(SPI_CLOCK_DIV4, MSBFIRST, SPI_MODE0); // May have to be set if hardware is not fully compatible to Arduino specifications.
-
-MFRC522DriverSPI driver{ss_pin, spiClass, spiSettings}; // Create SPI driver.
-
-MFRC522 mfrc522{driver}; // Create MFRC522 instance.
+static MFRC522DriverPinSimple ss_pin(SDA_PIN); // Create pin driver. See typical pin layout above.
+static SPIClass &spiClass = SPI; // Alternative SPI e.g. SPI2 or from library e.g. softwarespi.
+static const SPISettings spiSettings = SPISettings(SPI_CLOCK_DIV4, MSBFIRST, SPI_MODE0); // May have to be set if hardware is not fully compatible to Arduino specifications.
+static MFRC522DriverSPI driver{ss_pin, spiClass, spiSettings}; // Create SPI driver.
+static MFRC522 mfrc522{driver}; // Create MFRC522 instance.
 
 void setup_card() 
 {
-  //Serial.begin(115200); // Initialize serial communications with the PC for debugging.
-  //while (!Serial);      // Do nothing if no serial port is opened (added for Arduinos based on ATMEGA32U4).
-  mfrc522.PCD_Init();   // Init MFRC522 board.
-  MFRC522Debug::PCD_DumpVersionToSerial(mfrc522, Serial);	// Show details of PCD - MFRC522 Card Reader details.
-	Serial.println(F("Scan PICC to see UID, SAK, type, and data blocks..."));
+  mfrc522.PCD_Init(); // Init MFRC522 board.
 }
 
 bool read_card() 
 {
-	if ( !mfrc522.PICC_IsNewCardPresent() || !mfrc522.PICC_ReadCardSerial()) 
+	if (!mfrc522.PICC_IsNewCardPresent() || !mfrc522.PICC_ReadCardSerial()) 
 		return false;
 
-  // MFRC522Debug::PICC_DumpToSerial(mfrc522, Serial, &(mfrc522.uid));
+  logs("Card detected");
+
+  // get the card uid
+  const MFRC522Constants::Uid &uid = mfrc522.uid;
+  // array of card id number in bytes 
+  uint8_t i, picc_id[uid.size];
+
+  for (i = 0; i < uid.size; i++)
+  {
+    picc_id[i] = uid.uidByte[i];
+    logs(picc_id[i]);
+  }
+
   return true;
 }

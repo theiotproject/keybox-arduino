@@ -8,8 +8,9 @@
 #define BTN_PIN 16
 
 // LEDs
-#define LED_RED_PIN 16
-#define LED_GREEN_PIN 17
+#define LED_RED_PIN 27
+#define LED_GREEN_PIN 26
+#define LED_BLUE_PIN 25
 #define BUILTIN_LED 2 
 
 // SERVO
