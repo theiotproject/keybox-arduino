@@ -7,6 +7,8 @@
 #include <stdint.h>
 #include <stdio.h>
 #include "../lib/logs.h"
+#include "../lib/get_cards.h"
+#include "../lib/get_keyslots.h"
 
 // Create pin driver. See typical pin layout above.
 static MFRC522DriverPinSimple ss_pin(SDA_PIN); 
@@ -21,6 +23,11 @@ static MFRC522 mfrc522{driver};
 
 bool check_access()
 {
+  // TODO
+  // get_keyslots()
+  uint64_t* cards_arr = get_cards();
+  delete cards_arr;
+
   // get the card id
   const MFRC522Constants::Uid &uid = mfrc522.uid;
 
