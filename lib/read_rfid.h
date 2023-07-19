@@ -7,8 +7,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include "../lib/logs.h"
-#include "../lib/get_cards.h"
-#include "../lib/get_keyslots.h"
+#include "../lib/golioth_conn.h"
 
 // Create pin driver. See typical pin layout above.
 static MFRC522DriverPinSimple ss_pin(SDA_PIN); 
@@ -23,10 +22,9 @@ static MFRC522 mfrc522{driver};
 
 bool check_access()
 {
-  // TODO
-  // get_keyslots()
+  bool is_access = false;
   uint64_t* cards_arr = get_cards();
-  delete cards_arr;
+  uint64_t* keyslots_arr = get_keyslots();
 
   // get the card id
   const MFRC522Constants::Uid &uid = mfrc522.uid;
@@ -34,15 +32,25 @@ bool check_access()
   // array of card id in bytes 
   char picc_id_str[uid.size]; 
   uint8_t picc_id_byte;
+  uint64_t picc_id_int;
 
   // add bytes to array
   for (uint8_t i = 0; i < uid.size; i++)
     picc_id_byte += sprintf(&picc_id_str[picc_id_byte], "%d", uid.uidByte[i]);
 
-  // log card id
-  logs(picc_id_str);
+  picc_id_int = std::atoll(picc_id_str);
 
-  return true;
+  // log card id
+  logs(picc_id_int);
+
+  // check if card has access
+  if (picc_id_int == cards_arr[1])
+    is_access = true;
+
+  delete cards_arr;
+  delete keyslots_arr;
+
+  return is_access;
 }
 
 void setup_card() 
@@ -64,7 +72,7 @@ bool read_card()
     {
       logs("Access granted");
 
-      // access LED signal, blink 3 times
+      // blink 3 times
       for (uint8_t i = 0; i < 3; i++)
       {
         digitalWrite(LED_BLUE_PIN, HIGH);
@@ -79,7 +87,11 @@ bool read_card()
     {
       logs("Access denied");
 
-      // TODO blink when access is denied
+      // blink once
+      digitalWrite(LED_BLUE_PIN, HIGH);
+      delay(1000);
+      digitalWrite(LED_BLUE_PIN, LOW);
+
       return false;
     }
   }

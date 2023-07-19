@@ -38,11 +38,11 @@ static void run_servo(uint8_t dist, uint8_t key_slot_id)
   dist_in_deg = dist * (18/PI_CONST);
 
   logs("Servo running forwards");
-  logs(key_slot_id);
   for (deg = MIN_DEG; deg < MAX_DEG; deg++)
   {
     // set new servo position and wait 15ms
     servo.write(deg);
+
     // the delay value slows down servo
     delay(10);
   }
