@@ -1,10 +1,11 @@
 #pragma once
 #include <Arduino.h>
 #include <time.h>
+#include <stdint.h>
 
-static time_t time_res;
+static time_t uptime;
 
-void setup_logs(int baud)
+void setup_logs(uint16_t baud)
 {
   Serial.begin(baud);
 }
@@ -12,10 +13,10 @@ void setup_logs(int baud)
 template <typename int_or_str> 
 void logs(int_or_str arg)
 {
-  time_res = time(NULL);
+  time(&uptime);
   Serial.print("[LOG]");
   Serial.print("[ ");
-  Serial.print((intmax_t) time_res);
+  Serial.print((intmax_t) uptime);
   Serial.print(" ] ");
   Serial.println(arg);
 }

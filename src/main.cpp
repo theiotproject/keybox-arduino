@@ -3,9 +3,10 @@
 #include <Wire.h>
 #include <stdint.h>
 #include "../lib/config.h"
+#include "../lib/logs.h"
 #include "../lib/run_servo.h"
 #include "../lib/read_rfid.h"
-#include "../lib/logs.h"
+#include "../lib/numpad.h"
 
 bool btn_state;
 
@@ -23,6 +24,8 @@ void loop()
 {
   if(read_card())
   {
-    run_servo(SERVO_OPEN_DISTANCE);
+    uint8_t keyslot_id = get_key();
+    if (keyslot_id != NULL_KEYSLOT)
+      run_servo(SERVO_OPEN_DISTANCE, keyslot_id);
   }
 }

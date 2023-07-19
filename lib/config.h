@@ -3,6 +3,8 @@
 // GENERAL PURPOSE
 #define PI_CONST 3.1415
 #define SERIAL_MONITOR_BAUD_RATE 9600
+#define WAIT_TIME_FOR_KEYSLOT_OPEN 5
+#define NULL_KEYSLOT 0
 
 // BTN
 #define BTN_PIN 16
@@ -31,3 +33,12 @@
 #define MOSI_PIN 23
 #define RST_PIN 21
 
+// KEYPAD
+#define R1_PIN 14
+#define R2_PIN 15
+#define C1_PIN 32
+#define C2_PIN 33
+#define C3_PIN 16
+#define C4_PIN 17
+#define ROWS 2
+#define COLS 4

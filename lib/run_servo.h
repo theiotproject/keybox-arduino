@@ -27,7 +27,7 @@ static void setup_servo()
 
 // dist -> rotation distance in [mm]
 // action -> move backwards to open or forward to close
-static void run_servo(uint8_t dist)
+static void run_servo(uint8_t dist, uint8_t key_slot_id)
 {
   uint8_t deg = MIN_DEG, dist_in_deg = 0;
 
@@ -38,6 +38,7 @@ static void run_servo(uint8_t dist)
   dist_in_deg = dist * (18/PI_CONST);
 
   logs("Servo running forwards");
+  logs(key_slot_id);
   for (deg = MIN_DEG; deg < MAX_DEG; deg++)
   {
     // set new servo position and wait 15ms
