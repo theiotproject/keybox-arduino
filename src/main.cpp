@@ -24,8 +24,9 @@ void loop()
 {
   if(read_card())
   {
-    uint8_t keyslot_id = get_key();
-    if (keyslot_id != NULL_KEYSLOT)
-      run_servo(SERVO_OPEN_DISTANCE, keyslot_id);
+    // key = slot id
+    uint8_t key = get_key();
+    if (key != NULL_SLOT)
+      run_servo(SERVO_OPEN_DISTANCE, key);
   }
 }

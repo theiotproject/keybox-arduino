@@ -4,9 +4,9 @@
 #define PI_CONST 3.1415
 #define SERIAL_MONITOR_BAUD_RATE 9600
 #define WAIT_TIME_FOR_KEYSLOT_OPEN 5
-#define NULL_KEYSLOT 0
-#define MAX_KEYSLOTS 16
-#define MAX_KEYSLOTS_CARDS 16
+#define NULL_SLOT 0
+#define MAX_SLOTS 16
+#define MAX_CARDS 16
 
 // BTN
 #define BTN_PIN 16
@@ -22,7 +22,7 @@
 #define DELAY_TIME_SEC 3
 #define SERVO_OPEN 1
 #define SERVO_CLOSE 0
-#define SERVO_OPEN_DISTANCE 31
+#define SERVO_OPEN_DISTANCE 20
 #define MAX_DEG 180
 #define MIN_DEG 0
 #define MAX_PULSE 2400

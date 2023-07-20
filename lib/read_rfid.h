@@ -6,8 +6,9 @@
 #include <MFRC522Debug.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "../lib/logs.h"
-#include "../lib/golioth_conn.h"
+#include "../lib/manage_card.h"
 
 // Create pin driver. See typical pin layout above.
 static MFRC522DriverPinSimple ss_pin(SDA_PIN); 
@@ -24,21 +25,21 @@ bool check_access()
 {
   bool is_access = false;
   uint64_t* cards_arr = get_cards();
-  uint64_t* keyslots_arr = get_keyslots();
+  uint64_t* slots_arr = get_slots();
 
   // get the card id
-  const MFRC522Constants::Uid &uid = mfrc522.uid;
+  const MFRC522Constants::Uid* uid = &mfrc522.uid;
 
   // array of card id in bytes 
-  char picc_id_str[uid.size]; 
+  char picc_id_str[uid->size]; 
   uint8_t picc_id_byte;
   uint64_t picc_id_int;
 
   // add bytes to array
-  for (uint8_t i = 0; i < uid.size; i++)
-    picc_id_byte += sprintf(&picc_id_str[picc_id_byte], "%d", uid.uidByte[i]);
+  for (uint8_t i = 0; i < uid->size; i++)
+    picc_id_byte += sprintf(&picc_id_str[picc_id_byte], "%d", uid->uidByte[i]);
 
-  picc_id_int = std::atoll(picc_id_str);
+  picc_id_int = atoll(picc_id_str);
 
   // log card id
   logs(picc_id_int);
@@ -47,8 +48,8 @@ bool check_access()
   if (picc_id_int == cards_arr[1])
     is_access = true;
 
-  delete cards_arr;
-  delete keyslots_arr;
+  free(cards_arr);
+  free(keyslots_arr);
 
   return is_access;
 }

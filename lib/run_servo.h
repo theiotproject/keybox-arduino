@@ -27,7 +27,7 @@ static void setup_servo()
 
 // dist -> rotation distance in [mm]
 // action -> move backwards to open or forward to close
-static void run_servo(uint8_t dist, uint8_t key_slot_id)
+static void run_servo(uint8_t dist, uint8_t key)
 {
   uint8_t deg = MIN_DEG, dist_in_deg = 0;
 
@@ -38,7 +38,7 @@ static void run_servo(uint8_t dist, uint8_t key_slot_id)
   dist_in_deg = dist * (18/PI_CONST);
 
   logs("Servo running forwards");
-  for (deg = MIN_DEG; deg < MAX_DEG; deg++)
+  for (deg = MIN_DEG; deg < dist_in_deg; deg++)
   {
     // set new servo position and wait 15ms
     servo.write(deg);
@@ -59,7 +59,7 @@ static void run_servo(uint8_t dist, uint8_t key_slot_id)
   digitalWrite(LED_RED_PIN, HIGH);
 
   logs("Servo running backwards");
-  for (deg = MAX_DEG; deg > MIN_DEG; deg--)
+  for (deg = dist_in_deg; deg > MIN_DEG; deg--)
   {
     servo.write(deg);
     delay(10);
