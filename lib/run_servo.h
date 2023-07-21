@@ -34,7 +34,7 @@ static void run_servo(uint8_t dist, uint8_t key)
   size_t i;
 
   // check access to slots
-  if (slots_arr[0] != key && slots_arr[1] != key && slots_arr[2])
+  if ((slots_arr[0] != key) && (slots_arr[1] != key) && (slots_arr[2] != key))
   {
     logs("", "No access to slot");
     return;

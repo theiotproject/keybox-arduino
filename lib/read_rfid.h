@@ -44,7 +44,7 @@ bool check_access()
   logs("Card uid: ", picc_id_int);
 
   // check access to card
-  if (picc_id_int == cards_arr[1])
+  if (picc_id_int == cards_arr[0])
     is_access = true;
 
   free(cards_arr);
