@@ -22,7 +22,7 @@ static uint8_t get_key()
 {
   char key;
 
-  logs("Waiting for key");
+  logs("", "Waiting for key");
   waiting_start_time = time(NULL);
   waiting_time = 0;
 
@@ -37,6 +37,6 @@ static uint8_t get_key()
       return (key - ASCII_DIGITS_START);
   }
 
-  logs("Timeout");
+  logs("", "Timeout");
   return 0;
 }

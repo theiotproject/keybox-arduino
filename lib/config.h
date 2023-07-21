@@ -5,8 +5,8 @@
 #define SERIAL_MONITOR_BAUD_RATE 9600
 #define WAIT_TIME_FOR_KEYSLOT_OPEN 5
 #define NULL_SLOT 0
-#define MAX_SLOTS 16
-#define MAX_CARDS 16
+#define MAX_SLOTS 8
+#define MAX_CARDS 8
 
 // BTN
 #define BTN_PIN 16

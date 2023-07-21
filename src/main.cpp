@@ -7,8 +7,7 @@
 #include "../lib/run_servo.h"
 #include "../lib/read_rfid.h"
 #include "../lib/numpad.h"
-
-bool btn_state;
+#include "../lib/manage_card.h"
 
 void setup() 
 {
@@ -24,7 +23,7 @@ void loop()
 {
   if(read_card())
   {
-    // key = slot id
+    // key -> slot id
     uint8_t key = get_key();
     if (key != NULL_SLOT)
       run_servo(SERVO_OPEN_DISTANCE, key);

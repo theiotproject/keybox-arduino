@@ -25,7 +25,6 @@ bool check_access()
 {
   bool is_access = false;
   uint64_t* cards_arr = get_cards();
-  uint64_t* slots_arr = get_slots();
 
   // get the card id
   const MFRC522Constants::Uid* uid = &mfrc522.uid;
@@ -42,14 +41,13 @@ bool check_access()
   picc_id_int = atoll(picc_id_str);
 
   // log card id
-  logs(picc_id_int);
+  logs("Card uid: ", picc_id_int);
 
-  // check if card has access
+  // check access to card
   if (picc_id_int == cards_arr[1])
     is_access = true;
 
   free(cards_arr);
-  free(keyslots_arr);
 
   return is_access;
 }
@@ -67,11 +65,9 @@ bool read_card()
 {
 	if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial()) 
   {
-    logs("Card detected");
-
     if (check_access())
     {
-      logs("Access granted");
+      logs("", "Access granted");
 
       // blink 3 times
       for (uint8_t i = 0; i < 3; i++)
@@ -86,12 +82,9 @@ bool read_card()
     }
     else 
     {
-      logs("Access denied");
-
-      // blink once
-      digitalWrite(LED_BLUE_PIN, HIGH);
-      delay(1000);
-      digitalWrite(LED_BLUE_PIN, LOW);
+      logs("", "Access denied");
+      // wait two seconds after card rejection
+      delay(2000);
 
       return false;
     }

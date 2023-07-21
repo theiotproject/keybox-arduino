@@ -1,10 +1,6 @@
-#include <stdio.h>
+#pragma once
 
-struct keybox_card
-{
-  uint64_t uid;
-  uint64_t slots[MAX_SLOTS];
-};
+#include <stdio.h>
 
 static uint64_t* get_cards()
 {
@@ -19,11 +15,13 @@ static uint64_t* get_cards()
   return cards_uids;
 }
 
-static uint64_t* get_slots()
+static uint8_t* get_slots()
 {
-  uint64_t* slots = (uint64_t*) malloc(sizeof(uint64_t) * MAX_SLOTS);
+  uint8_t* slots = (uint8_t*) malloc(sizeof(uint8_t) * MAX_SLOTS);
 
   slots[0] = 1;
+  slots[1] = 2;
+  slots[2] = 3;
 
   return slots;
 }

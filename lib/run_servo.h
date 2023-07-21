@@ -3,6 +3,7 @@
 #include <Servo.h>
 #include <stdint.h>
 #include "../lib/logs.h"
+#include "../lib/manage_card.h"
 
 static Servo servo;
 static uint8_t servo_position;
@@ -29,6 +30,16 @@ static void setup_servo()
 // action -> move backwards to open or forward to close
 static void run_servo(uint8_t dist, uint8_t key)
 {
+  uint8_t* slots_arr = get_slots();
+  size_t i;
+
+  // check access to slots
+  if (slots_arr[0] != key && slots_arr[1] != key && slots_arr[2])
+  {
+    logs("", "No access to slot");
+    return;
+  }
+  
   uint8_t deg = MIN_DEG, dist_in_deg = 0;
 
   if (dist > (PI_CONST * 10) || dist < 0)
@@ -37,7 +48,7 @@ static void run_servo(uint8_t dist, uint8_t key)
   // convert gear distance to degrees
   dist_in_deg = dist * (18/PI_CONST);
 
-  logs("Servo running forwards");
+  logs("", "Servo running forwards");
   for (deg = MIN_DEG; deg < dist_in_deg; deg++)
   {
     // set new servo position and wait 15ms
@@ -58,7 +69,9 @@ static void run_servo(uint8_t dist, uint8_t key)
   digitalWrite(LED_GREEN_PIN, LOW);
   digitalWrite(LED_RED_PIN, HIGH);
 
-  logs("Servo running backwards");
+  free(slots_arr);
+
+  logs("", "Servo running backwards");
   for (deg = dist_in_deg; deg > MIN_DEG; deg--)
   {
     servo.write(deg);
