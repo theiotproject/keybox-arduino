@@ -1,4 +1,4 @@
-# keybox-arduino
+# keybox-arduino UPDATE NEEDED
 
 This repository contains the software for the Keybox device.
 
@@ -9,7 +9,7 @@ This repository contains the software for the Keybox device.
 - [Servo library](https://www.arduino.cc/reference/en/libraries/servo/)
 
 ### Hardware
-- Arduino Uno R3 (can be a clone)
+- ESP32
 - Green LED
 - Red LED
 - Push button
