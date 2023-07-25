@@ -14,7 +14,6 @@ This repository contains the software for the Keybox device, a secure key manage
 To set up the Keybox, you will need the following components:
 - ESP32 microcontroller
 - Green, Red, and Blue LEDs
-- Push button
 - Servo motor (SG 90)
 - RFID RC522 module
 - Keypad
