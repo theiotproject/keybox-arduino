@@ -1,8 +1,10 @@
-#pragma once
+#include <cstdint>
+#include <cstdlib>
 
-#include <stdio.h>
+#include "../../include/config.h"
+#include "manage_card.h"
 
-static uint64_t* get_cards()
+uint64_t* get_cards()
 {
   // 20121723233 white id
   // 2521244850 blue id
@@ -15,7 +17,7 @@ static uint64_t* get_cards()
   return cards_uids;
 }
 
-static uint8_t* get_slots()
+uint8_t* get_slots()
 {
   uint8_t* slots = (uint8_t*) malloc(sizeof(uint8_t) * MAX_SLOTS);
 
