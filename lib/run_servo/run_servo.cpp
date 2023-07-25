@@ -1,14 +1,14 @@
-#pragma once
-
 #include <Servo.h>
 #include <stdint.h>
-#include "../lib/logs.h"
-#include "../lib/manage_card.h"
 
-static Servo servo;
-static uint8_t servo_position;
+#include "../manage_card/manage_card.h"
+#include "../../include/config.h"
+#include "run_servo.h"
 
-static void setup_servo()
+Servo servo;
+uint8_t servo_position;
+
+void setup_servo()
 {
   // init diode pins
   pinMode(LED_RED_PIN, OUTPUT);
@@ -27,8 +27,7 @@ static void setup_servo()
 }
 
 // dist -> rotation distance in [mm]
-// action -> move backwards to open or forward to close
-static void run_servo(uint8_t dist, uint8_t key)
+void run_servo(uint8_t dist, uint8_t key)
 {
   uint8_t* slots_arr = get_slots();
   size_t i;
@@ -36,7 +35,7 @@ static void run_servo(uint8_t dist, uint8_t key)
   // check access to slots
   if ((slots_arr[0] != key) && (slots_arr[1] != key) && (slots_arr[2] != key))
   {
-    logs("", "No access to slot");
+    Serial.println("[ Keybox Core ] No access to slot");
     return;
   }
   
@@ -48,7 +47,7 @@ static void run_servo(uint8_t dist, uint8_t key)
   // convert gear distance to degrees
   dist_in_deg = dist * (18/PI_CONST);
 
-  logs("", "Servo running forwards");
+  Serial.println("[ Keybox Core ] Servo running forwards");
   for (deg = MIN_DEG; deg < dist_in_deg; deg++)
   {
     // set new servo position and wait 15ms
@@ -71,7 +70,7 @@ static void run_servo(uint8_t dist, uint8_t key)
 
   free(slots_arr);
 
-  logs("", "Servo running backwards");
+  Serial.println("[ Keybox Core ] Servo running backwards");
   for (deg = dist_in_deg; deg > MIN_DEG; deg--)
   {
     servo.write(deg);

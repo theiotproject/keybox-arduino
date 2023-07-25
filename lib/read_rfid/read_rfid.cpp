@@ -1,14 +1,13 @@
-#pragma once
-
 #include <MFRC522v2.h>
 #include <MFRC522DriverSPI.h>
 #include <MFRC522DriverPinSimple.h>
 #include <MFRC522Debug.h>
-#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "../lib/logs.h"
-#include "../lib/manage_card.h"
+
+#include "../manage_card/manage_card.h"
+#include "../../include/config.h"
+#include "read_rfid.h"
 
 // Create pin driver. See typical pin layout above.
 static MFRC522DriverPinSimple ss_pin(SDA_PIN); 
@@ -41,7 +40,8 @@ bool check_access()
   picc_id_int = atoll(picc_id_str);
 
   // log card id
-  logs("Card uid: ", picc_id_int);
+  Serial.print("[ Keybox Core ] card uid: ");
+  Serial.println(picc_id_int);
 
   // check access to card
   if (picc_id_int == cards_arr[0])
@@ -67,7 +67,7 @@ bool read_card()
   {
     if (check_access())
     {
-      logs("", "Access granted");
+      Serial.println("[ Keybox Core ] Access granted");
 
       // blink 3 times
       for (uint8_t i = 0; i < 3; i++)
@@ -82,7 +82,7 @@ bool read_card()
     }
     else 
     {
-      logs("", "Access denied");
+      Serial.println("[ Keybox Core ] Access denied");
       // wait two seconds after card rejection
       delay(2000);
 
