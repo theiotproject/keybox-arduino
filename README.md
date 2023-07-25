@@ -1,37 +1,39 @@
-# keybox-arduino UPDATE NEEDED
+# Keybox-Arduino
 
-This repository contains the software for the Keybox device.
+This repository contains the software for the Keybox device, a secure key management system.
 
 ## Requirements
 
 ### Software
-- [Arduino IDE](https://support.arduino.cc/hc/en-us/articles/360019833020-Download-and-install-Arduino-IDE)
+- [PlatformIO Core](https://docs.platformio.org/en/latest/core/installation/index.html)
 - [Servo library](https://www.arduino.cc/reference/en/libraries/servo/)
+- [Keypad library](https://www.arduino.cc/reference/en/libraries/keypad/)
+- [RFID RC522 library](https://github.com/OSSLibraries/Arduino_MFRC522v2)
 
 ### Hardware
-- ESP32
-- Green LED
-- Red LED
+To set up the Keybox, you will need the following components:
+- ESP32 microcontroller
+- Green, Red, and Blue LEDs
 - Push button
-- Servo SG 90
+- Servo motor (SG 90)
+- RFID RC522 module
+- Keypad
 - Five 220 Ohm resistors
-
-[Circuit Diagram](https://imgur.com/a/XT39uWD)
 
 ## Installation
 
-**Note: This manual assumes that you are familiar with using Arduino IDE and have correctly set up your circuit.**
+> **Note:** This guide assumes that you are familiar with using PlatformIO Core and have correctly set up your circuit.
 
-### CLI
+### Command Line Installation
 1. Clone the repository to your local directory using the command: `git clone [repository URL]`
-2. Open Arduino IDE and navigate to the directory where the repository was cloned.
-3. Compile the sketch.
-4. Upload the sketch to the Arduino board.
+2. Build the project with: `pio run`
+3. Flash the code to the ESP32 board using: `pio run -t upload`
 
 ### Manual Installation
 1. Download the repository and extract its contents to your local directory.
-2. Open Arduino IDE and navigate to the directory where the repository was extracted.
-3. Compile the sketch.
-4. Upload the sketch to the Arduino board.
+2. Build the project with: `pio run`
+3. Flash the code to the ESP32 board using: `pio run -t upload`
 
-By following these steps, you will be able to set up and run the Keybox software on your Arduino device.
+Follow these steps carefully, and you'll have the Keybox device up and running in no time. If you encounter any issues during the installation process, refer to the documentation provided by PlatformIO and the respective libraries.
+
+Feel free to contribute to this project or report any bugs through issues. Happy hacking!
