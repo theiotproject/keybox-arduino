@@ -6,7 +6,7 @@
 #define WAIT_TIME_FOR_KEYSLOT_OPEN 5
 #define NULL_SLOT 0
 #define MAX_SLOTS 8
-#define MAX_CARDS 8
+#define MAX_CARDS 2
 
 // BTN
 #define BTN_PIN 16
@@ -18,7 +18,9 @@
 #define BUILTIN_LED 2 
 
 // SERVO
-#define SERVO_ANALOG_PIN 13
+#define SERVO_PULSE_GPIO_1 12
+#define SERVO_PULSE_GPIO_2 13
+#define SERVO_PULSE_GPIO_3 22
 #define DELAY_TIME_SEC 3
 #define SERVO_OPEN 1
 #define SERVO_CLOSE 0

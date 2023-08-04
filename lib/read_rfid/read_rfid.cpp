@@ -23,7 +23,7 @@ static MFRC522 mfrc522{driver};
 bool check_access()
 {
   bool is_access = false;
-  uint64_t* cards_arr = get_cards();
+  uint64_t *cards_arr = get_cards();
 
   // get the card id
   const MFRC522Constants::Uid* uid = &mfrc522.uid;
@@ -40,7 +40,7 @@ bool check_access()
   picc_id_int = atoll(picc_id_str);
 
   // log card id
-  Serial.print("[ Keybox Core ] card uid: ");
+  Serial.print("[ Keybox Core ] Card UID: ");
   Serial.println(picc_id_int);
 
   // check access to card

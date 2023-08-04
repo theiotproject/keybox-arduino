@@ -26,5 +26,7 @@ void loop()
     uint8_t key = get_key();
     if (key != NULL_SLOT)
       run_servo(SERVO_OPEN_DISTANCE, key);
+    
+    delay(1);
   }
 }

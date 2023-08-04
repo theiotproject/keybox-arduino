@@ -17,8 +17,7 @@ void setup_servo()
   // turn on RED LED 
   digitalWrite(LED_RED_PIN, HIGH);
 
-  // initialize servo
-  servo.attach(SERVO_ANALOG_PIN);
+  // init servo position
   servo_position = servo.read();
 
   // set servo to initial position
@@ -29,8 +28,27 @@ void setup_servo()
 // dist -> rotation distance in [mm]
 void run_servo(uint8_t dist, uint8_t key)
 {
-  uint8_t* slots_arr = get_slots();
+  uint8_t *slots_arr = get_slots();
   size_t i;
+
+
+  Serial.print("[ Keybox Core ] Slot ID: ");
+  Serial.println(key);
+
+  switch(key)
+  {
+    case 1:
+      servo.attach(SERVO_PULSE_GPIO_1);
+      break;
+    case 2:
+      servo.attach(SERVO_PULSE_GPIO_2);
+      break;
+    case 3:
+      servo.attach(SERVO_PULSE_GPIO_3);
+      break;
+    default:
+      servo.attach(NULL_SLOT);
+  }
 
   // check access to slots
   if ((slots_arr[0] != key) && (slots_arr[1] != key) && (slots_arr[2] != key))
